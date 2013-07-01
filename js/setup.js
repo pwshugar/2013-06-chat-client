@@ -21,14 +21,15 @@ $(document).ready(function() {
     var value = $(".chat")[0].value;
     console.log(value);
 
-    var message = {};
-    message.username = username;
-    message.text = value;
+    var message = {
+      "username": username,
+      "text": value
+    };
 
     $.ajax({
       type: "POST",
-      url: 'https://api.parse.com/1/classes/messages',
-      data: message,
+      url: 'https://api.parse.com/1/classes/test55',
+      data: JSON.stringify(message),
       contentType: 'application/json',
       success: function(){
         console.log("successful POST");
@@ -38,15 +39,50 @@ $(document).ready(function() {
       }
     });
 
-
     $(".chat")[0].value = "";
   });
 
+  $('.chat').keypress(function(e){
+    if(e.which === 13){
+      $('.submit').click();
+    }
+  });
 
+  var friends = {};
 
+  $('body').delegate('.username', 'click', function() {
+    if (!friends[$(this).text()]) {
+      $(".friendsList").append("<li>" + $(this).text() + "</li>");
+      friends[$(this).text()] = true;
+    }
+  });
 
+  (function getMessages(){
 
-
+    $.ajax({
+      type: "GET",
+      url: 'https://api.parse.com/1/classes/test55',
+      contentType: 'application/json',
+      success: function(data){
+        $('.chatList li').remove();
+        for (var i = data.results.length - 26; i < data.results.length; i++){
+          if(i >= 0 ){
+            if (friends[data.results[i].username]) {
+              $('.chatList').append($("<li><span class='username'>" + data.results[i].username + "</span>: <b>" +
+                                      data.results[i].text + "</b></li>"));
+            } else {
+              $('.chatList').append($("<li><span class='username'>" + data.results[i].username + "</span>: " +
+                                      data.results[i].text + "</li>"));
+            }
+          }
+        }
+      },
+      error: function(data) {
+        console.log('GET failed');
+      }
+    });
+    setTimeout(getMessages, 1000);
+  })();
 
 
 

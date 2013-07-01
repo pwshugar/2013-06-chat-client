@@ -6,7 +6,7 @@ body {
 
 #main {
     width: 500px;
-    margin: auto;
+    margin-left: 400px;
     text-align: left;
     background: white;
     padding: 50px 60px;
@@ -37,4 +37,25 @@ body {
     font-size: 12px;
     color: green;
     line-height: 13px;
+}
+
+.chatBox {
+    height: 600px;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#friends {
+    width: 250px;
+    margin: auto;
+    float: left;
+    background: white;
+    padding: 50px 0px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
 }
