@@ -92,10 +92,10 @@ $(document).ready(function() {
           if (data.results[i]){
             if (friends[data.results[i].username]) {
               $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: <b>" +
-                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</b></li>"));
+                                    $("<div></div>").text(data.results[i].text).html().slice(0, 10) + "</b></li>"));
             } else {
               $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: " +
-                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</li>"));
+                                    $("<div></div>").text(data.results[i].text).html().slice(0, 10) + "</li>"));
             }
           }
         }
