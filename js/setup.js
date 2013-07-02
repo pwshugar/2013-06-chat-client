@@ -39,8 +39,8 @@ $(document).ready(function() {
       }
     });
 
-    $(".chat")[0].value = "";
-  });
+   $(".chat")[0].value = "";
+   });
 
   $('.chat').keypress(function(e){
     if(e.which === 13){
@@ -52,15 +52,31 @@ $(document).ready(function() {
 
   $('body').delegate('.username', 'click', function() {
     if (!friends[$(this).text()]) {
-      $(".friendsList").append("<li>" + $(this).text() + "</li>");
+      $(".friendsList").append("<li class='friendLi'>" + $(this).text() + "</li>");
       friends[$(this).text()] = true;
     }
+  });
+
+  $('body').delegate('.friendLi', 'click', function() {
+    $(this).remove();
+    delete friends[$(this).text()];
   });
 
   $(".goToRoom").click(function(){
     var value = $(".makeRoom")[0].value;
     roomURL = value;
     $(".makeRoom")[0].value = "";
+  });
+
+  $('.makeRoom').keypress(function(e){
+    if(e.which === 13){
+      $('.goToRoom').click();
+    }
+  });
+
+
+  $('body').delegate('.linkRoom', 'click', function() {
+    roomURL = $(this).text();
   });
 
   (function getMessages(){
@@ -72,14 +88,14 @@ $(document).ready(function() {
       success: function(data){
         $('.chatList li').remove();
         $("#welcome").text("Welcome to the " + roomURL + " room!");
-        for (var i = data.results.length - 26; i < data.results.length; i++){
-          if(i >= 0 ){
+        for (var i = 0; i < 26; i++){
+          if (data.results[i]){
             if (friends[data.results[i].username]) {
-              $('.chatList').append($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html() + "</span>: <b>" +
-                                    $("<div></div>").text(data.results[i].text).html() + "</b></li>"));
+              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: <b>" +
+                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</b></li>"));
             } else {
-              $('.chatList').append($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html() + "</span>: " +
-                                    $("<div></div>").text(data.results[i].text).html() + "</li>"));
+              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: " +
+                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</li>"));
             }
           }
         }
@@ -88,7 +104,7 @@ $(document).ready(function() {
         console.log('GET failed');
       }
     });
-    setTimeout(getMessages, 1000);
+    setTimeout(getMessages, 500);
   })();
 
 
