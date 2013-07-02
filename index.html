@@ -9,12 +9,26 @@
     <script src="js/setup.js"></script>
   </head>
   <body>
-    <div id="friends">
-      <h2>Friends List</h2>
-      <ul class="friendsList"></ul>
+    <div id="sidebar">
+      <div id="friends">
+        <h2>Friends List</h2>
+        <ul class="friendsList"></ul>
+      </div>
+      <div id="rooms">
+        <h2>Chatrooms List</h2>
+        <div id="roomBox">
+          <ul class="roomsList">
+            <li class="linkRoom">messages</li>
+            <li class="linkRoom">Peter</li>
+            <li class="linkRoom">Max</li>
+          </ul>
+        </div>
+        <input class="makeRoom" type='text' name='makeRoom'>
+        <button class="goToRoom" type='button'>Go!</button>
+      </div>
     </div>
     <div id="main">
-      <h1>Chat with JSON!</h1>
+      <h1 id="welcome"></h1>
       <div class="chatBox">
         <ul class="chatList"></ul>
       </div>

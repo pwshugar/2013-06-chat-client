@@ -16,10 +16,10 @@ $.ajaxPrefilter(function(settings, _, jqXHR) {
 
 $(document).ready(function() {
   var username = window.location.search.slice(10);
+  var roomURL = 'messages';
 
   $(".submit").click(function(){
     var value = $(".chat")[0].value;
-    console.log(value);
 
     var message = {
       "username": username,
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: 'https://api.parse.com/1/classes/test55',
+      url: "https://api.parse.com/1/classes/" + roomURL,
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function(){
@@ -57,22 +57,29 @@ $(document).ready(function() {
     }
   });
 
+  $(".goToRoom").click(function(){
+    var value = $(".makeRoom")[0].value;
+    roomURL = value;
+    $(".makeRoom")[0].value = "";
+  });
+
   (function getMessages(){
 
     $.ajax({
       type: "GET",
-      url: 'https://api.parse.com/1/classes/test55',
+      url: "https://api.parse.com/1/classes/" + roomURL + "?order=-createdAt",
       contentType: 'application/json',
       success: function(data){
         $('.chatList li').remove();
+        $("#welcome").text("Welcome to the " + roomURL + " room!");
         for (var i = data.results.length - 26; i < data.results.length; i++){
           if(i >= 0 ){
             if (friends[data.results[i].username]) {
-              $('.chatList').append($("<li><span class='username'>" + data.results[i].username + "</span>: <b>" +
-                                      data.results[i].text + "</b></li>"));
+              $('.chatList').append($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html() + "</span>: <b>" +
+                                    $("<div></div>").text(data.results[i].text).html() + "</b></li>"));
             } else {
-              $('.chatList').append($("<li><span class='username'>" + data.results[i].username + "</span>: " +
-                                      data.results[i].text + "</li>"));
+              $('.chatList').append($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html() + "</span>: " +
+                                    $("<div></div>").text(data.results[i].text).html() + "</li>"));
             }
           }
         }

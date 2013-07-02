@@ -1,17 +1,18 @@
 body {
-    background: #eee;
+    background: #ccc;
     text-align: center;
     padding: 0 25px;
 }
 
 #main {
-    width: 500px;
+    width: 600px;
     margin-left: 400px;
     text-align: left;
     background: white;
+    margin-top: 20px;
     padding: 50px 60px;
     border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+    border-width: 1px;
 }
 
 #main h1 {
@@ -45,17 +46,42 @@ body {
     overflow: hidden;
 }
 
+.chat {
+    width: 520px;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
 }
 
-#friends {
-    width: 250px;
-    margin: auto;
+#sidebar {
     float: left;
+}
+
+#friends {
+    width: 300px;
+    height: 300px;
     background: white;
-    padding: 50px 0px;
+    padding: 20px 0px;
     border: solid #ddd;
-    border-width: 0 1px 1px 1px;
+    border-width: 1px;
+}
+
+#roomBox {
+    height: 200px;
+}
+
+#rooms {
+    width: 300px;
+    height: 300px;
+    background: white;
+    margin-top: 20px;
+    padding: 20px 0px;
+    border: solid #ddd;
+    border-width: 1px;
+}
+
+.makeRoom {
+    width: 160px;
 }
