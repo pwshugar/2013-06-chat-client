@@ -8,10 +8,10 @@ if(!/(&|\?)username=/.test(window.location.search)){
 }
 
 // Don't worry about this code, it will ensure that your ajax calls are allowed by the browser
-$.ajaxPrefilter(function(settings, _, jqXHR) {
-  jqXHR.setRequestHeader("X-Parse-Application-Id", "voLazbq9nXuZuos9hsmprUz7JwM2N0asnPnUcI7r");
-  jqXHR.setRequestHeader("X-Parse-REST-API-Key", "QC2F43aSAghM97XidJw8Qiy1NXlpL5LR45rhAVAf");
-});
+// $.ajaxPrefilter(function(settings, _, jqXHR) {
+//   jqXHR.setRequestHeader("X-Parse-Application-Id", "voLazbq9nXuZuos9hsmprUz7JwM2N0asnPnUcI7r");
+//   jqXHR.setRequestHeader("X-Parse-REST-API-Key", "QC2F43aSAghM97XidJw8Qiy1NXlpL5LR45rhAVAf");
+// });
 
 
 $(document).ready(function() {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "https://api.parse.com/1/classes/" + roomURL,
+      url: "http://127.0.0.1:8080/classes/" + roomURL,
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function(){
@@ -83,19 +83,22 @@ $(document).ready(function() {
 
     $.ajax({
       type: "GET",
-      url: "https://api.parse.com/1/classes/" + roomURL + "?order=-createdAt",
+      //url: "https://api.parse.com/1/classes/" + roomURL + "?order=-createdAt",
+      url: "http://127.0.0.1:8080/classes/" + roomURL,
       contentType: 'application/json',
       success: function(data){
+        data = JSON.parse(data);
+        console.log(data);
         $('.chatList li').remove();
         $("#welcome").text("Welcome to the " + roomURL + " room!");
         for (var i = 0; i < 26; i++){
-          if (data.results[i]){
-            if (friends[data.results[i].username]) {
-              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: <b>" +
-                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</b></li>"));
+          if (data[i]){
+            if (friends[data[i].username]) {
+              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data[i].username).html().slice(0, 30) + "</span>: <b>" +
+                                    $("<div></div>").text(data[i].text).html().slice(0, 70) + "</b></li>"));
             } else {
-              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data.results[i].username).html().slice(0, 30) + "</span>: " +
-                                    $("<div></div>").text(data.results[i].text).html().slice(0, 70) + "</li>"));
+              $('.chatList').prepend($("<li><span class='username'>" + $("<div></div>").text(data[i].username).html().slice(0, 30) + "</span>: " +
+                                    $("<div></div>").text(data[i].text).html().slice(0, 70) + "</li>"));
             }
           }
         }
